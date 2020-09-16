@@ -1,0 +1,21 @@
+version: '3'
+services:
+    dbtest:   
+      image: mysql:5.7
+      # container_name: dbtest
+      expose:
+        - "3306"
+      # ports:
+        # - "3307:3306"
+      working_dir: /var/lib/mysql
+      volumes:
+        - ./db:/var/lib/mysql
+      environment:
+        MYSQL_DATABASE: dbmain
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 'password2020'
+        MYSQL_ROOT_PASSWORD: 'password2020'
+      command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+    
+   

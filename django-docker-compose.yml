@@ -1,0 +1,35 @@
+version: '3'
+services:
+    maintest:
+      build: .
+      # container_name: django_main
+      # restart: always
+      command:  bash -c  "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8001 "
+      volumes:
+        - ./djangosrc:/workspace/djangosrc
+      ports:
+        - "8000:8001"
+      links:
+        - dbtest:mysql
+      depends_on:
+        - dbtest
+
+    dbtest:   
+      image: mysql:5.7
+      # container_name: dbtest
+      expose:
+        - "3306"
+      # ports:
+        # - "3307:3306"
+      working_dir: /var/lib/mysql
+      volumes:
+        - ./db:/var/lib/mysql
+      environment:
+        MYSQL_DATABASE: dbmain
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 'password2020'
+        MYSQL_ROOT_PASSWORD: 'password2020'
+      command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+    
+   
